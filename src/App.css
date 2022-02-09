@@ -1,0 +1,21 @@
+button {
+  background-color: yellow;
+  color: black;
+  font-family: "Courier New", Courier, monospace;
+  font-size: 20pt;
+  border-radius: 5px;
+}
+button:hover {
+  background-color: red;
+  color: white;
+}
+
+body {
+  text-align: center;
+  background-color: darkblue;
+  font-family: "Courier New", Courier, monospace;
+  color: white;
+}
+.score {
+  color: red;
+}
