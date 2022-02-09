@@ -5,6 +5,7 @@ import './App.css';
 class App extends Component {
   state = {
     data: null,
+    data2: null,
     question:'',
     value: '',
     answer: '',
@@ -19,6 +20,16 @@ class App extends Component {
       const response = await fetch("http://jservice.io/api/random");
       const data = await response.json();
       this.setState({data: data[0]})
+    } catch (err) {
+        console.error(err)
+    }
+  };
+// Get 10 More Questions
+  handleClick= async () => {
+    try {
+      const response = await fetch('http://jservice.io/api/random?count=10');
+      const data2 = await response.json();
+      this.setState({data2: data2[0]})
     } catch (err) {
         console.error(err)
     }
@@ -67,7 +78,11 @@ class App extends Component {
       <button onClick={this.handleIncrease}>Increase</button>
        <button onClick= {this.handleDecrease}>Decrease</button>
        <button onClick= {this.handleReset}>Reset</button>
+    </div> <br/>
 
+    <div>
+      <button onClick={this.handleClick}>Get 10 Questions</button>
+      {this.state.data2 && <TenQuestions tenQuestions={this.state.data2}/>}
     </div>
     
   </div>
@@ -75,7 +90,6 @@ class App extends Component {
 
   }
 }
-
 
 const RandomQuestion = (props) => {
   const{ranQuestion} = props;
@@ -99,5 +113,14 @@ const RandomQuestion = (props) => {
     )
   }
   
+  const TenQuestions =(props) => {
+    const {tenQuestions} = props;
+    console.log(tenQuestions)
+    return(
+      <div>
+        <h2>{tenQuestions.question}?</h2>
+      </div>
+    )
+  }
 
 export default App;
