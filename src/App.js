@@ -1,6 +1,9 @@
 
 import { Component } from 'react';
 import './App.css';
+import  RandomQuestion from './components/RandomQuestion'
+import Answer from './components/Answer';
+
 
 class App extends Component {
   state = {
@@ -15,25 +18,22 @@ class App extends Component {
     count: 0
   }
 
-  handleOnClick= async () => {
+  handleOnClick= async() => {
     try {
-      const response = await fetch("http://jservice.io/api/random");
-      const data = await response.json();
+      const res = await fetch("http://jservice.io/api/random");
+      const data = await res.json();
       this.setState({data: data[0]})
     } catch (err) {
         console.error(err)
     }
   };
+
 // Get 10 More Questions
-  handleClick= async () => {
-    try {
-      const response = await fetch('http://jservice.io/api/random?count=10');
-      const data2 = await response.json();
-      this.setState({data2: data2[0]})
-    } catch (err) {
-        console.error(err)
-    }
-  };
+ handleClick= async() => {
+    const res = await fetch('http://jservice.io/api/random?count=10')
+    const data = await res.json()
+    this.setState({data2: data})
+}
 
   toggleHidden () {
     this.setState({
@@ -62,7 +62,7 @@ class App extends Component {
      <h2>Let's Play</h2>
     <button onClick={this.handleOnClick}>Get Question</button>
 
-    <div>{this.state.data && <RandomQuestion ranQuestion={this.state.data}/>}</div>
+    <div>{this.state.data && <RandomQuestion rQ={this.state.data}/>}</div>
     </div> <br/>
 
     <div className="answer">
@@ -70,6 +70,7 @@ class App extends Component {
     {/* Add Toggle Button Display */}
     <button onClick={this.toggleHidden.bind(this)}>Answer</button> 
     {!this.state.isHidden && <Answer answer={this.state.data}/>}
+    {/* NO NEED */}
     {/* <div>{this.state.data && <Answer answer={this.state.data}/>}</div> */}
     </div>
 
@@ -80,47 +81,29 @@ class App extends Component {
        <button onClick= {this.handleReset}>Reset</button>
     </div> <br/>
 
-    <div>
+    {/* // Get 10 More Questions */}
+    <div className="tenQuestion">
       <button onClick={this.handleClick}>Get 10 Questions</button>
-      {this.state.data2 && <TenQuestions tenQuestions={this.state.data2}/>}
+      {/* NO NEED */}
+      {/* {this.state.data2 && <TenQuestions tenQuestions={this.state.data2}/>} */}
+      {this.state.data2 && this.state.data2.map (data2 => <h2>{data2.question}n</h2>)}
     </div>
+
     
   </div>
   );
 
   }
 }
-
-const RandomQuestion = (props) => {
-  const{ranQuestion} = props;
-  console.log(ranQuestion)
-    return(
-      <div className="ranQuestion">
-      <h2>Question: {ranQuestion.question}? </h2>
-      <h2>Category: {ranQuestion.category.title}</h2>
-      <h2>Points: {ranQuestion.value}</h2>
-      </div>
-    )
-  }
-
-  const Answer =(props) => {
-    const {answer} = props;
-    console.log (answer)
-    return(
-      <div>
-        <h2>Answer: {answer.answer}</h2>
-      </div>
-    )
-  }
-  
-  const TenQuestions =(props) => {
-    const {tenQuestions} = props;
-    console.log(tenQuestions)
-    return(
-      <div>
-        <h2>{tenQuestions.question}?</h2>
-      </div>
-    )
-  }
+  //NO NEED!
+  // const TenQuestions =(props) => {
+  //   const {tenQuestions} = props;
+  //   console.log(tenQuestions)
+  //   return(
+  //     <div>
+  //       <h2>{tenQuestions.question}</h2>
+  //     </div>
+  //   )
+  // }
 
 export default App;

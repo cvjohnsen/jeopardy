@@ -1,8 +1,16 @@
+.main-container > h1 {
+  font-size: 50pt;
+}
+
+.question > h2 {
+  font-size: 30pt;
+}
 button {
   background-color: yellow;
   color: black;
   font-family: "Courier New", Courier, monospace;
   font-size: 20pt;
+  font-weight: bold;
   border-radius: 5px;
 }
 button:hover {
