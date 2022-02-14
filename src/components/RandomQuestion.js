@@ -7,6 +7,7 @@ const RandomQuestion = (props) => {
       <h2>Question: {rQ.question}? </h2>
       <h2>Category: {rQ.category.title}</h2>
       <h2>Points: {rQ.value}</h2>
+      
       </div>
     )
   }

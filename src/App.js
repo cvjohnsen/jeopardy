@@ -3,20 +3,29 @@ import { Component } from 'react';
 import './App.css';
 import  RandomQuestion from './components/RandomQuestion'
 import Answer from './components/Answer';
-
+import Score from './components/Score';
 
 class App extends Component {
   state = {
     data: null,
     data2: null,
     question:'',
-    value: '',
+    value: 0,
     answer: '',
     category: '',
-    point: '',
     isHidden: true,
-    count: 0
   }
+
+//   async componentDidMount(){
+//     try{
+//     const res = await fetch("http://jservice.io/api/random")
+//     const data = await res.json()
+//     this.setState({data: data[10]})
+//     console.log('Hello from component did mount!')
+//     } catch (err) {
+//         console.error(err)
+//     }
+// }
 
   handleOnClick= async() => {
     try {
@@ -40,18 +49,6 @@ class App extends Component {
       isHidden: !this.state.isHidden
     })
   }
-
-  handleIncrease = () => {
-    this.setState({count : this.state.count + 1})
-  }
-
-  handleDecrease = ()=> {
-    this.setState({count : this.state.count - 1})
-  }
-
-  handleReset = ()=> {
-    this.setState({count : this.state.count = 0})
-  }
   
   render(){
   return (
@@ -61,49 +58,29 @@ class App extends Component {
     <div  className="question">
      <h2>Let's Play</h2>
     <button onClick={this.handleOnClick}>Get Question</button>
-
-    <div>{this.state.data && <RandomQuestion rQ={this.state.data}/>}</div>
-    </div> <br/>
+    <div>{this.state.data && <RandomQuestion rQ={this.state.data}/>} 
+    </div>
+    </div> 
+    <br/>
 
     <div className="answer">
-    {/* <h2>Answer</h2> */}
     {/* Add Toggle Button Display */}
     <button onClick={this.toggleHidden.bind(this)}>Answer</button> 
     {!this.state.isHidden && <Answer answer={this.state.data}/>}
-    {/* NO NEED */}
-    {/* <div>{this.state.data && <Answer answer={this.state.data}/>}</div> */}
     </div>
-
-    <div className="score">
-      <h2>Score: {this.state.count}</h2>
-      <button onClick={this.handleIncrease}>Increase</button>
-       <button onClick= {this.handleDecrease}>Decrease</button>
-       <button onClick= {this.handleReset}>Reset</button>
-    </div> <br/>
+    <div>
+        {this.state.data && <Score scr={this.state.data}/>}
+    </div>
 
     {/* // Get 10 More Questions */}
     <div className="tenQuestion">
       <button onClick={this.handleClick}>Get 10 Questions</button>
-      {/* NO NEED */}
-      {/* {this.state.data2 && <TenQuestions tenQuestions={this.state.data2}/>} */}
       {this.state.data2 && this.state.data2.map (data2 => <h2>{data2.question}n</h2>)}
-    </div>
-
-    
+    </div> 
   </div>
   );
 
   }
 }
-  //NO NEED!
-  // const TenQuestions =(props) => {
-  //   const {tenQuestions} = props;
-  //   console.log(tenQuestions)
-  //   return(
-  //     <div>
-  //       <h2>{tenQuestions.question}</h2>
-  //     </div>
-  //   )
-  // }
-
+ 
 export default App;
